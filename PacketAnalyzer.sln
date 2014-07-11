@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketAnalyzer", "PacketAnalyzer\PacketAnalyzer.csproj", "{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketAnalyzerDLL", "PacketAnalyzerDLL\PacketAnalyzerDLL.vcxproj", "{D90B6D15-3E94-4997-BA23-1C200646E7FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Debug|Win32.ActiveCfg = Debug|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Debug|x86.ActiveCfg = Debug|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Debug|x86.Build.0 = Debug|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Release|Mixed Platforms.Build.0 = Release|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Release|Win32.ActiveCfg = Release|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Release|x86.ActiveCfg = Release|x86
+		{31E4A7AE-C353-4FDE-8232-FCF7DED0FCE7}.Release|x86.Build.0 = Release|x86
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Debug|Win32.Build.0 = Debug|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Debug|x86.ActiveCfg = Debug|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Release|Win32.ActiveCfg = Release|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Release|Win32.Build.0 = Release|Win32
+		{D90B6D15-3E94-4997-BA23-1C200646E7FD}.Release|x86.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
