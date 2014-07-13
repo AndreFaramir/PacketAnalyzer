@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
+using PacketAnalyzer.Packets;
+using PacketAnalyzer.Packets.Outgoing;
 
 namespace PacketAnalyzer
 {
@@ -16,7 +18,7 @@ namespace PacketAnalyzer
         uint DLL_PATH_LENGTH;
         Thread pipeListener;
 
-        List<Packet> outgoingPackets = new List<Packet>();
+        List<OutgoingPacket> outgoingPackets = new List<OutgoingPacket>();
 
         public MainForm()
         {
@@ -47,60 +49,59 @@ namespace PacketAnalyzer
 
         }
 
-        private void ProcessPacket(byte[] packet)
+        private void ProcessPacket(byte[] buffer)
         {
-            if (packet[0] == 1) //Is outgoing packet
+            byte type = buffer[0];
+            uint timeStamp = BitConverter.ToUInt32(buffer, 1);
+            uint packetSize = BitConverter.ToUInt32(buffer, 5);
+            byte[] padding = new byte[8];
+            Array.Copy(buffer, 9, padding, 0, 8);
+            byte packetId = buffer[17];
+            OutgoingPacket packet;
+            if (type == 1)
             {
-                uint timeStamp = BitConverter.ToUInt32(packet, 1);
-                uint packetSize = BitConverter.ToUInt32(packet, 5);
-                byte packetId = packet[17];
-                string textData = Encoding.ASCII.GetString(packet, 18, (int)packetSize);
-                listView1.Invoke((MethodInvoker)delegate
+                switch (packetId)
                 {
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Text = timeStamp.ToString();
-                    lvi.SubItems.Add("0x" + packetId.ToString("X"));
-                    lvi.SubItems.Add(packetSize.ToString());
-                    Packet p;
-                    switch (packetId)
-                    {
-                        case 0x65:
-                            p = new Packet(packetId, "PLAYER_MOVE_NORTH", packet);
-                            break;
-                        case 0x66:
-                            p = new Packet(packetId, "PLAYER_MOVE_EAST", packet);
-                            break;
-                        case 0x67:
-                            p = new Packet(packetId, "PLAYER_MOVE_SOUTH", packet);
-                            break;
-                        case 0x68:
-                            p = new Packet(packetId, "PLAYER_MOVE_WEST", packet);
-                            break;
-                        case 0x6A:
-                            p = new Packet(packetId, "PLAYER_MOVE_NORTH_EAST", packet);
-                            break;
-                        case 0x6B:
-                            p = new Packet(packetId, "PLAYER_MOVE_SOUTH_EAST", packet);
-                            break;
-                        case 0x6C:
-                            p = new Packet(packetId, "PLAYER_MOVE_SOUTH_WEST", packet);
-                            break;
-                        case 0x6D:
-                            p = new Packet(packetId, "PLAYER_MOVE_NORTH_WEST", packet);
-                            break;
-                        case 0x96:
-                            p = new Packet(packetId, "PLAYER_SPEECH", packet);
-                            break;
-                        default:
-                            p = new Packet(packetId, "UNKNOWN_PACKET", packet);
-                            break;
-                    }
+                    case 0x65:
+                    case 0x66:
+                    case 0x67:
+                    case 0x68:
+                    case 0x6A:
+                    case 0x6B:
+                    case 0x6C:
+                    case 0x6D:
+                        packet = new PlayerMove(packetId, buffer);
+                        break;
+                    case 0x96:
+                        packet = new PlayerSpeech(packetId, buffer);
+                        break;
+                    default:
+                        packet = new Unknown(packetId, buffer);
+                        break;
+                }
 
-                    lvi.SubItems.Add(p.PacketName);
-                    listView1.Items.Add(lvi);
-                    outgoingPackets.Add(p);
-                });
+                outgoingPackets.Add(packet);
+                AddList(timeStamp, packetId, packetSize, packet.Description);
             }
+        }
+
+        public void AddList(uint timeStamp, byte id, uint size, string name)
+        {
+            listView1.Invoke((MethodInvoker)delegate
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = timeStamp.ToString();
+                lvi.SubItems.Add(id.ToString("X"));
+                lvi.SubItems.Add(size.ToString());
+                lvi.SubItems.Add(name);
+
+
+                listView1.Items.Add(lvi);
+                if (!listView1.Focused)
+                {
+                    listView1.EnsureVisible(listView1.Items.Count - 1);
+                }
+            });
         }
 
         private bool InjectDLL(int processId)
@@ -137,7 +138,14 @@ namespace PacketAnalyzer
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
+            dataGridView1.Rows.Clear();
+            OutgoingPacket packet = outgoingPackets[e.ItemIndex];
 
+            foreach (PacketData d in packet.ProcessedData)
+            {
+                dataGridView1.Rows.Add(d.Description, d.Type, d.Size, d.Data);
+            }
+            
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

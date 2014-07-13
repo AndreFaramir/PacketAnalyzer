@@ -58,7 +58,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Packet.cs" />
+    <Compile Include="Packets\Outgoing\PlayerSpeech.cs" />
+    <Compile Include="Packets\Outgoing\Unknown.cs" />
+    <Compile Include="Packets\PacketData.cs" />
+    <Compile Include="Packets\OutgoingPacket.cs" />
+    <Compile Include="Packets\Outgoing\PlayerMove.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinAPI.cs" />
@@ -93,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pauseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="shit.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
