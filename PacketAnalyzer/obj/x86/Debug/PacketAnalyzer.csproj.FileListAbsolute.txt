@@ -5,3 +5,5 @@ C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\Pack
 C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\PacketAnalyzer.exe
 C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\PacketAnalyzer.pdb
 C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\PacketAnalyzer.csprojResolveAssemblyReference.cache
+C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\PacketAnalyzer.MainForm.resources
+C:\Users\Martin\Desktop\Program\PacketAnalyzer\PacketAnalyzer\obj\x86\Debug\PacketAnalyzer.InjectForm.resources

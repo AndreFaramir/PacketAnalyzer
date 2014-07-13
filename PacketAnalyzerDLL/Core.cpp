@@ -64,15 +64,19 @@ void __declspec(naked) Core::outgoingHook(){
 
 void Core::handleOutgoingPackets(){
 	Packet* packet = new Packet();
+	DWORD timeStamp = GetTickCount();
 	packet->size = *(DWORD*)core->alignAddress(Addresses::OUTGOING_LEN);
 	memcpy(packet->buffer, (void*)core->alignAddress(Addresses::OUTGOING_DATA_STREAM), packet->size);
 
-	BYTE *buffer = new BYTE[packet->size + 1];
+	BYTE *buffer = new BYTE[packet->size + 1 + 4 + 4];
+	memset(buffer, 0, packet->size + 1 + 4 + 4);
 	*buffer = 1; //1 for outgoing packet
-	memcpy(buffer + 1, packet->buffer, packet->size);
+	memcpy((buffer + 1), &timeStamp, 4);
+	memcpy((buffer + 5), &packet->size, 4);
+	memcpy((buffer + 9), packet->buffer, packet->size);
 
 	DWORD n = 0;
-	WriteFile(this->pipeHandle, buffer, packet->size + 1, &n, 0);
+	WriteFile(this->pipeHandle, buffer, packet->size + 1 + 4 + 4, &n, 0);
 
 	delete packet;
 }
